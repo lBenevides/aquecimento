@@ -1,36 +1,52 @@
 require_relative 'item'
-require_relative 'study_diary'
+
+REGISTER = 1
+ALL      = 2
+SEARCH   = 3
+DELETE   = 4 
+EXIT     = 5
 
 def welcome
   'Bem-vindo ao Diário de Estudos, seu companheiro para estudar!'
 end
 
-def clear
-  system('clear')
+def menu
+  puts "[#{REGISTER}] Cadastrar um item para estudar"
+  puts "[#{ALL}] Ver todos os itens cadastrados"
+  puts "[#{SEARCH}] Buscar um item de estudo"
+  puts "[#{DELETE}] Deletar um item"
+  puts "[#{EXIT}] Sair"
+  print 'Escolha uma opção: '
+  gets.to_i
 end
 
-clear
+def clear
+  print 'Aperte enter para continuar'
+  gets.chomp
+  system('clear')  
+end
+
 puts welcome
-diary = StudyDiary.new
-option = StudyDiary.menu
+option = menu
 
-
-loop do 
-  if option == 1
-    diary.register_item
-  elsif option == 2
-    diary.items.each_with_index do |item, index|
-      puts "##{index + 1} - #{item.title} - #{item.category}"
-    end
-    puts 'Nenhum item cadastrado' if diary.items.empty?
-  elsif option == 3
-    
-  elsif option == 4
-    break
+while option != EXIT
+  if option == REGISTER
+    Item.register
+    clear
+  elsif option == ALL
+    puts Item.all
+    puts 'Nenhum item cadastrado' if Item.all.empty?
+    clear
+  elsif option == SEARCH
+    Item.search
+    clear
+  elsif option == DELETE
+    Item.delete
+    clear
   else
     puts 'Opção inválida'
   end
-  option = StudyDiary.menu
+  option = menu
 end
 
 puts 'Obrigado por usar o Diário de Estudos'  
