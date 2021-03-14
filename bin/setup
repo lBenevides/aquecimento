@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+puts '===== Instalando dependencias ===='
+system('bundle install') 
+
+require 'sqlite3'
+
+db = SQLite3::Database.new "test.db"
+
+row = db.execute <<-SQL
+  create table if not exists test (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    category TEXT
+  );
+SQL
+
+
+

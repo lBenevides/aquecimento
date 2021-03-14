@@ -1,4 +1,5 @@
 require_relative 'item'
+require 'sqlite3'
 
 REGISTER = 1
 ALL      = 2
